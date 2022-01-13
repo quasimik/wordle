@@ -58,10 +58,10 @@ class Wordle:
         unseen = list(self.word)
         for i, (g, w) in enumerate(zip(guess, self.word)):
             if g == w:
-                unseen[i] = None
+                unseen.remove(g)
                 guess_result[i] = 2
         for i, (g, w) in enumerate(zip(guess, self.word)):
-            if g in unseen:
+            if guess_result[i] == 0 and g in unseen:
                 unseen.remove(g)
                 guess_result[i] = 1
         win = sum((r == 2) for r in guess_result) == self.word_length
