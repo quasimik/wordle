@@ -88,9 +88,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with open(args.wordlist) as f:
-        wordlist = [w.strip() for w in f]
-        wordlist = [w for w in wordlist if len(w) == args.word_length]
+        wordlist_all = [w.strip() for w in f]
+        wordlist = [w for w in wordlist_all if len(w) == args.word_length]
     if args.word is None:
+        if args.seed is None:
+            args.seed = random.choice(wordlist_all)
         random.seed(args.seed)
         args.word = random.choice(wordlist)
 
@@ -115,4 +117,5 @@ if __name__ == '__main__':
         print('win')
     else:
         print(f'''lose, word is {colored(args.word, 'green')}''')
+    print(f'length:{args.word_length}  seed:{args.seed}')
     print(wordle.get_history(mode='hidden'))
